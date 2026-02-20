@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campaign Donasi Alumni</title>
+    <meta
+      name="description"
+      content="Halaman kampanye donasi alumni dengan progress target, konfirmasi transfer, dan transparansi histori."
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="poster-panel" aria-label="Poster Kampanye">
+        <img
+          class="poster-image"
+          src="assets/images/poster-fit.png"
+          alt="Poster kampanye donasi alumni"
+        />
+
+        <div class="progress-overlay" role="region" aria-label="Progress Donasi">
+          <p class="label">Progress Donasi</p>
+          <p class="numbers" id="progressNumbers">Rp 0 / Rp 0</p>
+
+          <div
+            class="progress"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            id="progressBar"
+          >
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <p class="meta" id="progressMeta">0% tercapai</p>
+          <p class="updated" id="progressUpdated">Pembaruan: -</p>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <section class="card panel-shell" aria-label="Panel Donasi">
+          <header class="side-header">
+            <h1>Donasi Alumni</h1>
+            <p>Satu tempat untuk konfirmasi transfer dan arsip transparansi.</p>
+            <div class="bank-inline">
+              <span>Bank BCA</span>
+              <strong>1234567890</strong>
+              <small>a.n. Yayasan Alumni</small>
+            </div>
+          </header>
+
+          <nav class="tab-nav" aria-label="Navigasi Panel">
+            <button type="button" class="tab-btn active" data-tab-target="tab-form">Konfirmasi</button>
+            <button type="button" class="tab-btn" data-tab-target="tab-history">Histori</button>
+          </nav>
+
+          <section class="tab-content active" id="tab-form" aria-label="Form Konfirmasi Donasi">
+            <form id="donationForm" novalidate>
+              <input type="hidden" name="campaign_id" id="campaignId" value="campaign-2026" />
+
+              <div class="form-grid">
+                <div class="field">
+                  <label for="donor_name">Nama Donatur</label>
+                  <input id="donor_name" name="donor_name" required maxlength="100" />
+                </div>
+
+                <div class="field">
+                  <label for="batch_year">Angkatan</label>
+                  <input id="batch_year" name="batch_year" maxlength="20" placeholder="Contoh: 2019" />
+                </div>
+
+                <div class="field">
+                  <label for="amount_claimed">Nominal Transfer</label>
+                  <input
+                    id="amount_claimed"
+                    name="amount_claimed"
+                    type="number"
+                    required
+                    min="1000"
+                    step="1000"
+                    placeholder="100000"
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="transfer_datetime">Waktu Transfer</label>
+                  <input id="transfer_datetime" name="transfer_datetime" type="datetime-local" required />
+                </div>
+
+                <div class="field">
+                  <label for="sender_bank">Bank Pengirim</label>
+                  <input
+                    id="sender_bank"
+                    name="sender_bank"
+                    required
+                    maxlength="50"
+                    placeholder="BCA / BNI / BRI"
+                  />
+                </div>
+
+                <div class="field field-full">
+                  <label for="receipt_drive_url">Link Bukti Transfer (Google Drive)</label>
+                  <input
+                    id="receipt_drive_url"
+                    name="receipt_drive_url"
+                    required
+                    type="url"
+                    placeholder="https://drive.google.com/..."
+                  />
+                </div>
+              </div>
+
+              <details class="optional-box">
+                <summary>Tambah catatan (opsional)</summary>
+                <label for="note">Catatan</label>
+                <textarea id="note" name="note" rows="2" maxlength="300"></textarea>
+              </details>
+
+              <div class="honeypot" aria-hidden="true">
+                <label for="website">Website</label>
+                <input id="website" name="website" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <button type="submit" id="submitBtn">Kirim Konfirmasi</button>
+              <p class="status" id="formStatus" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <section class="tab-content" id="tab-history" aria-label="Transparansi Histori">
+            <h2>Histori & Transparansi</h2>
+            <p>Laporan batch sebelumnya tersimpan di Google Drive.</p>
+            <ul id="historyList"></ul>
+          </section>
+        </section>
+      </aside>
+    </main>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
