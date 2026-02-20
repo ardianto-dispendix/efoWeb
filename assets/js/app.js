@@ -53,8 +53,32 @@ async function loadStaticData() {
   renderHistory(historyData.items);
 }
 
-function isGoogleDriveUrl(url) {
-  return /drive\.google\.com|docs\.google\.com/.test(url || "");
+function toBase64Payload(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = String(reader.result || "");
+      const marker = "base64,";
+      const idx = result.indexOf(marker);
+      if (idx === -1) {
+        reject(new Error("Invalid file encoding"));
+        return;
+      }
+      resolve(result.slice(idx + marker.length));
+    };
+    reader.onerror = () => reject(new Error("Failed reading file"));
+    reader.readAsDataURL(file);
+  });
+}
+
+function isAllowedReceiptFile(file) {
+  const allowed = {
+    "image/jpeg": true,
+    "image/png": true,
+    "application/pdf": true,
+  };
+  const maxBytes = 2 * 1024 * 1024;
+  return Boolean(file && allowed[file.type] && file.size > 0 && file.size <= maxBytes);
 }
 
 function setupForm() {
@@ -69,10 +93,10 @@ function setupForm() {
 
     const formData = new FormData(form);
     const scriptUrl = (window.APP_CONFIG && window.APP_CONFIG.appsScriptUrl || "").trim();
-    const receiptUrl = formData.get("receipt_drive_url");
+    const receiptFile = formData.get("receipt_file");
 
-    if (!isGoogleDriveUrl(receiptUrl)) {
-      status.textContent = "Link bukti transfer harus menggunakan Google Drive.";
+    if (!(receiptFile instanceof File) || !isAllowedReceiptFile(receiptFile)) {
+      status.textContent = "Bukti transfer harus JPG/PNG/PDF dan maksimal 2MB.";
       status.classList.add("err");
       return;
     }
@@ -87,9 +111,25 @@ function setupForm() {
       submitBtn.disabled = true;
       submitBtn.textContent = "Mengirim...";
 
+      const encodedReceipt = await toBase64Payload(receiptFile);
+      const payload = new URLSearchParams();
+
+      formData.forEach((value, key) => {
+        if (key !== "receipt_file") {
+          payload.append(key, String(value));
+        }
+      });
+
+      payload.append("receipt_filename", receiptFile.name);
+      payload.append("receipt_mime", receiptFile.type);
+      payload.append("receipt_base64", encodedReceipt);
+
       const res = await fetch(scriptUrl, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: payload.toString(),
       });
 
       const data = await res.json();
@@ -112,27 +152,5 @@ function setupForm() {
   });
 }
 
-function setupTabs() {
-  const buttons = document.querySelectorAll(".tab-btn");
-  const tabs = document.querySelectorAll(".tab-content");
-
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.dataset.tabTarget;
-      if (!target) return;
-
-      buttons.forEach((b) => b.classList.remove("active"));
-      tabs.forEach((t) => t.classList.remove("active"));
-
-      btn.classList.add("active");
-      const panel = document.getElementById(target);
-      if (panel) {
-        panel.classList.add("active");
-      }
-    });
-  });
-}
-
 loadStaticData();
 setupForm();
-setupTabs();

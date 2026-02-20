@@ -6,7 +6,7 @@ Stack:
 - Static HTML/CSS/JS
 - Google Apps Script (form API)
 - Google Sheets (submission storage)
-- Google Drive (receipt links + historical docs)
+- Google Drive (file bukti transfer upload + historical docs)
 
 ## Structure
 
@@ -48,8 +48,10 @@ Only values from this file are displayed in progress overlay.
 
 Edit `data/historical.json` and commit changes.
 
-## Form API
+## Form API (Direct Upload)
 
 Set Apps Script URL in `assets/js/config.js`.
 
 Without that URL, form will not submit and will show setup warning in UI.
+
+Form konfirmasi sekarang mengirim file langsung ke Apps Script, lalu Apps Script menyimpan file ke Google Drive folder yang kamu set di `apps-script/Code.gs`.

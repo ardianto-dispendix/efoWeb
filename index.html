@@ -51,12 +51,7 @@
             </div>
           </header>
 
-          <nav class="tab-nav" aria-label="Navigasi Panel">
-            <button type="button" class="tab-btn active" data-tab-target="tab-form">Konfirmasi</button>
-            <button type="button" class="tab-btn" data-tab-target="tab-history">Histori</button>
-          </nav>
-
-          <section class="tab-content active" id="tab-form" aria-label="Form Konfirmasi Donasi">
+          <section class="panel-section form-section" aria-label="Form Konfirmasi Donasi">
             <form id="donationForm" novalidate>
               <input type="hidden" name="campaign_id" id="campaignId" value="campaign-2026" />
 
@@ -85,11 +80,6 @@
                 </div>
 
                 <div class="field">
-                  <label for="transfer_datetime">Waktu Transfer</label>
-                  <input id="transfer_datetime" name="transfer_datetime" type="datetime-local" required />
-                </div>
-
-                <div class="field">
                   <label for="sender_bank">Bank Pengirim</label>
                   <input
                     id="sender_bank"
@@ -101,13 +91,13 @@
                 </div>
 
                 <div class="field field-full">
-                  <label for="receipt_drive_url">Link Bukti Transfer (Google Drive)</label>
+                  <label for="receipt_file">Upload Bukti Transfer (JPG/PNG/PDF, max 2MB)</label>
                   <input
-                    id="receipt_drive_url"
-                    name="receipt_drive_url"
+                    id="receipt_file"
+                    name="receipt_file"
                     required
-                    type="url"
-                    placeholder="https://drive.google.com/..."
+                    type="file"
+                    accept="image/jpeg,image/png,application/pdf"
                   />
                 </div>
               </div>
@@ -128,10 +118,12 @@
             </form>
           </section>
 
-          <section class="tab-content" id="tab-history" aria-label="Transparansi Histori">
+          <div class="section-separator" role="separator" aria-label="Pemisah"></div>
+
+          <section class="panel-section history-section history-card" aria-label="Transparansi Histori">
             <h2>Histori & Transparansi</h2>
             <p>Laporan batch sebelumnya tersimpan di Google Drive.</p>
-            <ul id="historyList"></ul>
+            <ul id="historyList" class="timeline-list"></ul>
           </section>
         </section>
       </aside>
