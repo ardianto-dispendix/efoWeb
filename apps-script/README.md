@@ -8,9 +8,7 @@ Nama sheet tab: `submissions`
 
 Header row (baris 1) wajib persis ini:
 
-`submission_id | created_at | donor_name | batch_year | amount_claimed | transfer_datetime | sender_bank | receipt_drive_url | note | status | verified_amount | verified_at | verified_by | campaign_id`
-
-Catatan: kolom `transfer_datetime` tetap ada untuk kompatibilitas data, tapi sekarang tidak diisi dari form (akan kosong kecuali diisi manual oleh admin).
+`submission_id | created_at | donor_name | batch_year | amount_claimed | sender_bank | receipt_drive_url | note | status | verified_amount | verified_at | verified_by | campaign_id`
 
 ## 2) Pasang Apps Script
 

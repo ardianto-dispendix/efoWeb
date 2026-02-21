@@ -1,5 +1,5 @@
 const SHEET_NAME = "submissions";
-const DRIVE_FOLDER_ID = "REPLACE_WITH_YOUR_FOLDER_ID";
+const DRIVE_FOLDER_ID = "1YDjWjhoMpyOvBwCknTbftxBccQB8A7xT";
 const MAX_RECEIPT_BYTES = 2 * 1024 * 1024;
 const ALLOWED_RECEIPT_MIME = {
   "image/jpeg": true,
@@ -67,7 +67,6 @@ function doPost(e) {
       sanitize(p.donor_name),
       sanitize(p.batch_year || ""),
       amount,
-      sanitize(p.transfer_datetime || ""),
       sanitize(p.sender_bank),
       sanitize(receiptUrl),
       sanitize(p.note || ""),
