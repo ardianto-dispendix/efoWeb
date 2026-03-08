@@ -48,7 +48,7 @@ body {
   content: "";
   position: absolute;
   inset: -20px;
-  background-image: url("../images/poster-fit.jpeg");
+  background-image: url("../images/poster-fit.png");
   background-size: cover;
   background-position: center;
   filter: blur(16px);
